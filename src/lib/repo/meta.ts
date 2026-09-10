@@ -11,10 +11,11 @@ export const REPO = {
   cloneHttps: "https://github.com/hovtgc/human-to-agents.git",
   cloneSsh: "git@github.com:hovtgc/human-to-agents.git",
   githubUrl: "https://github.com/hovtgc/human-to-agents",
+  githubProfile: "https://github.com/hovtgc",
   xUrl: "https://x.com/hovinthenorth",
   ownerName: "Hovhannes Mkhitaryan",
   ownerAvatar: "/owner.jpg",
-  version: "0.1.0",
+  version: "0.2.0",
   created: "2026-09-03",
 } as const;
 

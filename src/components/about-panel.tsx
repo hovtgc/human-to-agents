@@ -1,5 +1,6 @@
 import { CONTRIBUTORS, REPO } from "@/lib/repo/meta";
 import { fileCount } from "@/lib/repo/commits";
+import { GitHubMark, OwnerAvatar, XMark } from "./mark";
 import { LanguageBar } from "./language-bar";
 import { Separator } from "./ui/separator";
 
@@ -25,11 +26,42 @@ export function AboutPanel() {
         </dl>
         <Separator />
         <div>
+          <h2 className="text-xs font-medium tracking-wide text-ash uppercase">Owner</h2>
+          <div className="mt-3 flex items-center gap-3">
+            <OwnerAvatar className="size-9" />
+            <div className="min-w-0">
+              <p className="truncate text-sm text-ink">{REPO.ownerName}</p>
+              <p className="truncate text-xs text-ash">@{REPO.owner}</p>
+            </div>
+          </div>
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <a
+              href={REPO.xUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-10 items-center justify-center gap-1.5 rounded-full border border-line bg-raised text-xs font-medium text-ink hover:bg-panel"
+            >
+              <XMark className="size-3.5" />
+              X
+            </a>
+            <a
+              href={REPO.githubProfile}
+              target="_blank"
+              rel="noreferrer"
+              className="flex h-10 items-center justify-center gap-1.5 rounded-full border border-line bg-raised text-xs font-medium text-ink hover:bg-panel"
+            >
+              <GitHubMark className="size-3.5" />
+              GitHub
+            </a>
+          </div>
+        </div>
+        <Separator />
+        <div>
           <h2 className="text-xs font-medium tracking-wide text-ash uppercase">Contributors</h2>
           <ul className="mt-3 grid gap-2">
-            {CONTRIBUTORS.map((c) => {
-              const avatar =
-                "avatar" in c && c.avatar ? (
+            {CONTRIBUTORS.map((c) => (
+              <li key={c.handle} className="flex items-center gap-2 text-sm">
+                {"avatar" in c && c.avatar ? (
                   <img
                     src={c.avatar}
                     alt=""
@@ -41,37 +73,13 @@ export function AboutPanel() {
                   <span className="grid size-7 place-items-center rounded-full bg-raised text-xs text-mist">
                     {c.name.slice(0, 1)}
                   </span>
-                );
-              const name = (
+                )}
                 <span className="min-w-0">
                   <span className="block truncate text-ink">{c.name}</span>
-                  <span className="block text-xs text-ash">
-                    {"url" in c && c.url ? `@${c.handle}` : c.role}
-                  </span>
+                  <span className="block text-xs text-ash">{c.role}</span>
                 </span>
-              );
-              return (
-                <li key={c.handle} className="flex items-center gap-2 text-sm">
-                  {"url" in c && c.url ? (
-                    <a
-                      href={c.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="flex min-w-0 items-center gap-2 hover:text-ink"
-                      aria-label={`${c.handle} on X`}
-                    >
-                      {avatar}
-                      {name}
-                    </a>
-                  ) : (
-                    <>
-                      {avatar}
-                      {name}
-                    </>
-                  )}
-                </li>
-              );
-            })}
+              </li>
+            ))}
           </ul>
         </div>
       </div>

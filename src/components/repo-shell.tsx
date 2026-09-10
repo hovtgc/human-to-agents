@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu, Search, Star } from "lucide-react";
-import { OwnerAvatar } from "@/components/mark";
+import { OwnerJump } from "@/components/mark";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipProvider } from "@/components/ui/tooltip";
 import { CloneMenu } from "@/components/clone-menu";
@@ -69,36 +69,14 @@ export function RepoShell({
                 <Menu className="size-4" />
               </Button>
             ) : null}
-            <div className="flex min-w-0 items-center gap-2">
-              <a
-                href={REPO.xUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="shrink-0 rounded-full"
-                aria-label={`${REPO.owner} on X`}
-                title={`@${REPO.owner} on X`}
+            <div className="flex min-w-0 items-center gap-2.5">
+              <OwnerJump />
+              <Link
+                to="/"
+                className="min-w-0 truncate font-display text-lg leading-none tracking-tight text-ink hover:underline sm:text-xl"
               >
-                <OwnerAvatar />
-              </a>
-              <span className="min-w-0">
-                <span className="flex min-w-0 items-baseline gap-1.5">
-                  <a
-                    href={REPO.xUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hidden truncate text-sm text-mist hover:text-ink hover:underline sm:inline"
-                  >
-                    {REPO.owner}
-                  </a>
-                  <span className="hidden text-ash sm:inline">/</span>
-                  <Link
-                    to="/"
-                    className="truncate font-display text-lg leading-none tracking-tight text-ink hover:underline sm:text-xl"
-                  >
-                    {REPO.name}
-                  </Link>
-                </span>
-              </span>
+                {REPO.name}
+              </Link>
             </div>
             <span className="hidden rounded-full border border-line px-2 py-0.5 text-xs tracking-wide text-mist uppercase sm:inline">
               Public
