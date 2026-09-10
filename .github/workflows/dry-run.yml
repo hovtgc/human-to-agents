@@ -1,0 +1,21 @@
+name: mapping-dry-run
+on: [push]
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python agent/python/test_scope.py
+      - run: python agent/python/test_mapping.py
+      - run: python agent/python/relay.py --mapping examples/mapping.md --dry-run
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npx tsx agent/node/relay.ts --mapping examples/mapping.md --dry-run

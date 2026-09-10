@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hovtgc/human-to-agents/raw/main/schema/mapping.schema.json",
+  "title": "Axiom channel mapping",
+  "type": "object",
+  "required": ["workspace", "platform", "scope", "agent", "channels"],
+  "additionalProperties": false,
+  "properties": {
+    "workspace": { "type": "string", "minLength": 1 },
+    "platform": { "enum": ["slack", "discord"] },
+    "scope": { "type": "string", "minLength": 1 },
+    "agent": { "type": "string", "minLength": 1 },
+    "collect_seconds": { "type": "integer", "minimum": 5, "maximum": 600 },
+    "channels": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "role", "direction"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "name": { "type": "string" },
+          "role": { "enum": ["management", "room", "reports"] },
+          "direction": { "enum": ["in", "out", "both"] }
+        }
+      }
+    }
+  }
+}
