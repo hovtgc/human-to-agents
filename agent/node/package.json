@@ -1,0 +1,12 @@
+{
+  "name": "@axiom/scoped-relay",
+  "version": "0.2.0",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "axiom-relay": "./relay.ts"
+  },
+  "scripts": {
+    "dry-run": "npx tsx relay.ts --mapping ../../examples/mapping.md --dry-run"
+  }
+}
