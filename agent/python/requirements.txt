@@ -1,0 +1,4 @@
+# stdlib is enough for dry-run, URL maps, and mapping tests.
+# Live adapters (optional):
+# slack-sdk>=3.33
+# discord.py>=2.4
