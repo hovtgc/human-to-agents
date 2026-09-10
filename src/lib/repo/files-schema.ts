@@ -4,6 +4,7 @@ const CHANNELS = [
   "# Channel mapping schema",
   "",
   "A mapping is a markdown document. Agents must parse it, not invent a parallel config.",
+  "Contract: [PROTOCOL.md](/blob/PROTOCOL.md) (frozen v0.2).",
   "",
   "## Front matter",
   "",
@@ -14,6 +15,8 @@ const CHANNELS = [
   "| `scope` | yes | Opaque string. The wall. |",
   "| `agent` | yes | Process name, used in reports. |",
   "| `collect_seconds` | no | Default `45`. |",
+  "",
+  "The mapping source itself is a path or an `https://` URL, passed as `--mapping`.",
   "",
   "## Table columns",
   "",
@@ -31,13 +34,14 @@ const CHANNELS = [
   "3. Duplicate `id` values are an error.",
   "4. Names are not unique and not keys.",
   "5. Unknown columns are ignored.",
+  "6. Unknown ids never appear in logs, exceptions, or reports. Substitute `<outside-scope>`.",
   "",
   "Machine-readable copy: [mapping.schema.json](/blob/schema/mapping.schema.json).",
 ].join("\n");
 
 const SCHEMA = `{
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://axiom.git/schema/mapping.json",
+  "$id": "https://github.com/hovtgc/human-to-agents/raw/main/schema/mapping.schema.json",
   "title": "Axiom channel mapping",
   "type": "object",
   "required": ["workspace", "platform", "scope", "agent", "channels"],
