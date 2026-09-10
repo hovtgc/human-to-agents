@@ -1,0 +1,4 @@
+mapping: examples/mapping.md
+platform: slack
+dry_run: true
+collect_seconds: 45
