@@ -8,15 +8,26 @@ Live: [human-to-agents.grok.me](https://human-to-agents.grok.me)
 git clone https://github.com/hovtgc/human-to-agents.git
 ```
 
+Owner: [@hovinthenorth](https://x.com/hovinthenorth)
+
 ## Axioms
 
 1. **Map, don't prompt.** Channel IDs live in a markdown file. A cloud or local agent reads that file as the only source of truth for where it may speak.
 2. **Relay, then report.** Management channels broadcast. The agent fans the message into scoped rooms, collects replies, and reports back. Nothing else.
 3. **Scope is a wall.** An agent bound to `team.growth` cannot read, write, or even name a channel outside that scope.
 
-## Issues
+## Mobile viewport ([#1](https://github.com/hovtgc/human-to-agents/issues/1))
 
-Mobile UI bugs tracked here:
+The git-as-page UI is phone-first:
 
-- [#1](https://github.com/hovtgc/human-to-agents/issues/1) Viewport not optimized — horizontal overflow on README and code
-- [#2](https://github.com/hovtgc/human-to-agents/issues/2) Green GitHub-style Code button with copyable clone URL
+- `viewport-fit=cover` and safe-area padding on sticky chrome
+- README fences and mapping tables scroll inside the card — the page does not shift sideways at 390px
+- 44px tap targets, 16px inputs (no iOS focus-zoom)
+
+## Code button ([#2](https://github.com/hovtgc/human-to-agents/issues/2))
+
+Green **Code** control copies this remote:
+
+`https://github.com/hovtgc/human-to-agents.git`
+
+MIT.
