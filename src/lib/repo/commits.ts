@@ -3,6 +3,56 @@ import { FILES } from "./files";
 
 export const COMMITS: Commit[] = [
   {
+    hash: "f4b18c20e9a73d55c0e1aa82b7d04691",
+    short: "f4b18c2",
+    author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
+    date: "2026-09-15T17:32:00Z",
+    message: "Breadcrumb trail for gathering",
+    body: "An existing anchor is a gather, not a skip. Read that thread. Cite permalinks. Do not open a second. A crumb without a permalink does not render.",
+    files: [
+      {
+        path: "docs/breadcrumb.md",
+        status: "added",
+        additions: 42,
+        deletions: 0,
+        patch: [
+          "@@ docs/breadcrumb.md",
+          "+# Breadcrumb trail",
+          "+A broadcast is a trail, not a blast.",
+          "+| empty | post the ask once |",
+          "+| set | gather — read that thread |",
+          "+No permalink → the line does not render.",
+        ].join("\n"),
+      },
+      {
+        path: "agent/python/report.py",
+        status: "modified",
+        additions: 36,
+        deletions: 10,
+        patch: [
+          "@@ agent/python/report.py",
+          "+class Crumb:",
+          "+def format_crumb(crumb: Crumb) -> str | None:",
+          "+    if not crumb.permalink or not crumb.claim: return None",
+          "+    who = crumb.author_name or \"<unresolved:\" + crumb.author_id + \">\"",
+        ].join("\n"),
+      },
+      {
+        path: "examples/trail.md",
+        status: "added",
+        additions: 24,
+        deletions: 0,
+        patch: [
+          "@@ examples/trail.md",
+          "+action: gather",
+          "+trail:",
+          "+  - Jordan Lee: legal copy is in the shared doc  [permalink]",
+          "+  - <unresolved:U0NONE01>: thank you  [permalink]",
+        ].join("\n"),
+      },
+    ],
+  },
+  {
     hash: "c91e4a70b2d18f35a6c0e947d1b80f22",
     short: "c91e4a7",
     author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },

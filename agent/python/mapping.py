@@ -50,14 +50,16 @@ class Mapping:
         return {c.id for c in self.channels if c.role == "room"}
 
     def plan(self) -> tuple[tuple[Work, str], ...]:
-        """Each work row is a broadcast. action is post, skip, or gap."""
+        """Each work row is a broadcast. action is post, gather, skip, or gap."""
         rooms = self.room_ids()
         out: list[tuple[Work, str]] = []
         for w in self.work:
             if not w.room or w.room not in rooms:
                 out.append((w, "gap"))
-            elif w.anchor or w.state == "closed":
+            elif w.state == "closed":
                 out.append((w, "skip"))
+            elif w.anchor:
+                out.append((w, "gather"))
             else:
                 out.append((w, "post"))
         return tuple(out)

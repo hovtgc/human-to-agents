@@ -93,6 +93,7 @@ Optional second table — **work** — maps each broadcast to a project and a ro
 ```
 
 Notion (or any PM) dumps this table. The relay reads markdown. See [examples/mapping-work.md](/blob/examples/mapping-work.md).
+Info gathering along a posted broadcast: [docs/breadcrumb.md](/blob/docs/breadcrumb.md).
 
 Full contract: [schema/channels.md](/blob/schema/channels.md).
 

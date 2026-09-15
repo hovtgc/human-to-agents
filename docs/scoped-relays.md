@@ -18,6 +18,10 @@ Unknown ids are not logged. `redact()` returns `<outside-scope>`. Exceptions do 
 
 Unknown ids are dropped before step 2.
 
+With a `work` table the fan-out is per project. An existing `anchor` is a **gather**:
+read that thread, cite replies, do not post a second kickoff. Instructions:
+[docs/breadcrumb.md](/blob/docs/breadcrumb.md).
+
 ## Reload
 
 `SIGHUP` rebuilds the mapping and the wall. In-flight collect windows finish against the map they started with.

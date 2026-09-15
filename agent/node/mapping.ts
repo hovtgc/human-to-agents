@@ -131,11 +131,12 @@ function parseTables(body: string): { channels: Channel[]; work: Work[] } {
   return { channels, work };
 }
 
-export function plan(mapping: Mapping): { work: Work; action: "post" | "skip" | "gap" }[] {
+export function plan(mapping: Mapping): { work: Work; action: "post" | "gather" | "skip" | "gap" }[] {
   const rooms = new Set(mapping.channels.filter((c) => c.role === "room").map((c) => c.id));
   return mapping.work.map((w) => {
     if (!w.room || !rooms.has(w.room)) return { work: w, action: "gap" as const };
-    if (w.anchor || w.state === "closed") return { work: w, action: "skip" as const };
+    if (w.state === "closed") return { work: w, action: "skip" as const };
+    if (w.anchor) return { work: w, action: "gather" as const };
     return { work: w, action: "post" as const };
   });
 }

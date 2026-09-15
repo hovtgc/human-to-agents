@@ -60,11 +60,11 @@ def test_v02_map_has_no_work():
     assert m.plan() == ()
 
 
-def test_work_plan_post_skip_gap():
+def test_work_plan_post_gather_gap():
     m = load_mapping(WORK)
     actions = {w.id: a for w, a in m.plan()}
     assert actions["north-star"] == "post"
-    assert actions["insiders"] == "skip"
+    assert actions["insiders"] == "gather"
     assert actions["no-room"] == "gap"
 
 
@@ -80,6 +80,6 @@ def test_duplicate_work_id_is_an_error():
 if __name__ == "__main__":
     test_missing_management_is_an_error()
     test_v02_map_has_no_work()
-    test_work_plan_post_skip_gap()
+    test_work_plan_post_gather_gap()
     test_duplicate_work_id_is_an_error()
     print("ok")
