@@ -22,6 +22,7 @@ if __package__ is None:
 
 from discord_adapter import DiscordAdapter
 from mapping import load_mapping_from
+from notion import NotionError, apply_writes, client_from_env, load_work_from_notion
 from report import format_report
 from scope import ScopeGuard
 from slack_adapter import SlackAdapter
@@ -33,13 +34,16 @@ ADAPTERS = {
 
 
 class Runtime:
-    def __init__(self, source: str, platform: str | None) -> None:
+    def __init__(self, source: str, platform: str | None, notion_db: str | None = None) -> None:
         self.source = source
         self.platform_override = platform
+        self.notion_db = notion_db
         self.reload()
 
     def reload(self) -> None:
         mapping = load_mapping_from(self.source)
+        if self.notion_db:
+            mapping = load_work_from_notion(mapping, self.notion_db, client_from_env())
         platform = self.platform_override or mapping.platform
         if platform not in ADAPTERS:
             raise SystemExit(f"unknown platform: {platform}")
@@ -47,7 +51,7 @@ class Runtime:
         self.platform = platform
         self.guard = ScopeGuard(mapping)
         self.adapter = ADAPTERS[platform](mapping, self.guard)
-        logging.info("loaded scope=%s ids=%d", mapping.scope, len(mapping.ids()))
+        logging.info("loaded scope=%s ids=%d work=%d", mapping.scope, len(mapping.ids()), len(mapping.work))
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -56,9 +60,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--platform", choices=sorted(ADAPTERS))
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--collect-seconds", type=int, default=None)
+    parser.add_argument("--notion-db", default=None, help="Notion Projects database id")
     args = parser.parse_args(argv)
 
-    runtime = Runtime(args.mapping, args.platform)
+    try:
+        runtime = Runtime(args.mapping, args.platform, args.notion_db)
+    except NotionError as err:
+        raise SystemExit(str(err)) from err
     collect = args.collect_seconds or runtime.mapping.collect_seconds
 
     if args.dry_run:
@@ -70,6 +78,9 @@ def main(argv: list[str] | None = None) -> int:
             reply_count=0,
             collect_seconds=collect,
         ))
+        if args.notion_db:
+            for line in apply_writes(client_from_env(), runtime.mapping.plan(), {}, dry_run=True):
+                sys.stdout.write(line + "\n")
         return 0
 
     if hasattr(signal, "SIGHUP"):

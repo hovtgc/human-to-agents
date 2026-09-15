@@ -28,6 +28,7 @@ class Work:
     state: str
     anchor: str
     owner: str
+    page_id: str = ""
 
 
 @dataclass(frozen=True)
@@ -63,6 +64,17 @@ class Mapping:
             else:
                 out.append((w, "post"))
         return tuple(out)
+
+    def replace_work(self, work: tuple[Work, ...]) -> Mapping:
+        return Mapping(
+            workspace=self.workspace,
+            platform=self.platform,
+            scope=self.scope,
+            agent=self.agent,
+            collect_seconds=self.collect_seconds,
+            channels=self.channels,
+            work=work,
+        )
 
 
 class MappingError(ValueError):
@@ -143,6 +155,7 @@ def _parse_tables(body: str) -> tuple[tuple[Channel, ...], tuple[Work, ...]]:
                             state=data.get("state", ""),
                             anchor=data.get("anchor", ""),
                             owner=data.get("owner", ""),
+                            page_id=data.get("page_id", ""),
                         )
                     )
         header = None

@@ -10,3 +10,4 @@ The mapping schema is frozen at v0.3. v0.2 maps remain valid. New platforms are 
 6. A work row may only broadcast into a mapped `room`. A missing room is a gap, never a guess.
 7. If `anchor` is set, do not open a second thread. Gather that thread instead.
 8. A breadcrumb crumb without a permalink does not render. Do not invent a name.
+9. Live Notion uses stdlib HTTP. No extra package. Dry-run may GET; it must not PATCH.

@@ -18,6 +18,7 @@ export type Work = {
   state: string;
   anchor: string;
   owner: string;
+  pageId?: string;
 };
 
 export type Mapping = {
@@ -102,6 +103,7 @@ function parseTables(body: string): { channels: Channel[]; work: Work[] } {
           state: data.state ?? "",
           anchor: data.anchor ?? "",
           owner: data.owner ?? "",
+          pageId: data.page_id ?? "",
         });
       }
     }
@@ -139,6 +141,10 @@ export function plan(mapping: Mapping): { work: Work; action: "post" | "gather" 
     if (w.anchor) return { work: w, action: "gather" as const };
     return { work: w, action: "post" as const };
   });
+}
+
+export function replaceWork(mapping: Mapping, work: Work[]): Mapping {
+  return { ...mapping, work };
 }
 
 function validate(meta: Record<string, string>, channels: Channel[], work: Work[]) {

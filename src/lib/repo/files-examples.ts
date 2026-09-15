@@ -60,7 +60,7 @@ const WORK = [
   "",
   "# growth-chef / team.growth — broadcasts as projects",
   "",
-  "Fictional IDs. The `work` table is what Notion dumps. The `channels` table is the wall.",
+  "Fictional IDs. Offline stand-in for the Notion Projects database. The `channels` table is the wall. Live: `--notion-db` + `NOTION_TOKEN` — the agent reads Projects and writes anchors back.",
   "",
   "| id | name | role | direction |",
   "|----|------|------|-----------|",

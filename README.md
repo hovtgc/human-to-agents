@@ -92,7 +92,7 @@ Optional second table — **work** — maps each broadcast to a project and a ro
 | north-star | North Star launch | C0OPS03 | active | | U08AAAA |
 ```
 
-Notion (or any PM) dumps this table. The relay reads markdown. See [examples/mapping-work.md](/blob/examples/mapping-work.md).
+The work table is the offline stand-in. Live, the agent reads the Notion Projects database and writes back: Broadcast TS, Broadcast Permalink, Last Status Update. Channels stay markdown — that is the wall. See [docs/notion.md](/blob/docs/notion.md) and [examples/mapping-work.md](/blob/examples/mapping-work.md).
 Info gathering along a posted broadcast: [docs/breadcrumb.md](/blob/docs/breadcrumb.md).
 
 Full contract: [schema/channels.md](/blob/schema/channels.md).

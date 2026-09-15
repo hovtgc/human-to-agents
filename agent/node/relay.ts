@@ -2,11 +2,12 @@
 /** Axiom scoped relay — TypeScript runtime. Same contract as the Python agent. */
 
 import { parseArgs } from "node:util";
-import { loadMappingFrom } from "./mapping.ts";
+import { loadMappingFrom, plan } from "./mapping.ts";
 import { formatReport } from "./report.ts";
 import { ScopeGuard } from "./scope.ts";
 import { SlackAdapter } from "./slack.ts";
 import { DiscordAdapter } from "./discord.ts";
+import { applyWrites, clientFromEnv, loadWorkFromNotion, NotionError } from "./notion.ts";
 
 const adapters = { slack: SlackAdapter, discord: DiscordAdapter } as const;
 
@@ -19,10 +20,12 @@ class Runtime {
   constructor(
     private source: string,
     private platformOverride?: string,
+    private notionDb?: string,
   ) {}
 
   async reload(): Promise<void> {
-    const mapping = await loadMappingFrom(this.source);
+    let mapping = await loadMappingFrom(this.source);
+    if (this.notionDb) mapping = await loadWorkFromNotion(mapping, this.notionDb, clientFromEnv());
     const platform = (this.platformOverride ?? mapping.platform) as keyof typeof adapters;
     const Adapter = adapters[platform];
     if (!Adapter) {
@@ -42,6 +45,7 @@ const { values } = parseArgs({
     platform: { type: "string" },
     "dry-run": { type: "boolean", default: false },
     "collect-seconds": { type: "string" },
+    "notion-db": { type: "string" },
   },
 });
 
@@ -50,8 +54,16 @@ if (!values.mapping) {
   process.exit(2);
 }
 
-const runtime = new Runtime(values.mapping, values.platform);
-await runtime.reload();
+const runtime = new Runtime(values.mapping, values.platform, values["notion-db"]);
+try {
+  await runtime.reload();
+} catch (err) {
+  if (err instanceof NotionError) {
+    console.error(err.message);
+    process.exit(2);
+  }
+  throw err;
+}
 
 const collect = Number(values["collect-seconds"] ?? runtime.mapping.collectSeconds);
 
@@ -66,6 +78,10 @@ if (values["dry-run"]) {
       collectSeconds: collect,
     }),
   );
+  if (values["notion-db"]) {
+    const lines = await applyWrites(clientFromEnv(), plan(runtime.mapping), {}, true);
+    for (const line of lines) console.log(line);
+  }
   process.exit(0);
 }
 

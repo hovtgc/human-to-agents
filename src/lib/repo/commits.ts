@@ -3,6 +3,41 @@ import { FILES } from "./files";
 
 export const COMMITS: Commit[] = [
   {
+    hash: "b8d21e47c0a95f16e2b3cc58a9d07433",
+    short: "b8d21e4",
+    author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
+    date: "2026-09-15T18:12:00Z",
+    message: "Talk to Notion: read projects, write trails",
+    body: "The agent updates Notion. After a post it writes Broadcast TS and Permalink. After a gather it writes Last Status Update. Dry-run GETs; it does not PATCH. Markdown remains the wall.",
+    files: [
+      {
+        path: "agent/python/notion.py",
+        status: "modified",
+        additions: 120,
+        deletions: 12,
+        patch: [
+          "@@ agent/python/notion.py",
+          "-This module does not open a network connection.",
+          "+The agent reads the Projects database and writes back.",
+          "+def write_anchor(self, page_id, ts, permalink)",
+          "+def write_trail(self, page_id, trail)",
+        ].join("\n"),
+      },
+      {
+        path: "docs/notion.md",
+        status: "added",
+        additions: 36,
+        deletions: 0,
+        patch: [
+          "@@ docs/notion.md",
+          "+# Notion",
+          "+Notion is the live work ledger. Markdown is still the wall.",
+          "+The agent talks to Notion. It does not wait for a dumped file.",
+        ].join("\n"),
+      },
+    ],
+  },
+  {
     hash: "a2e90d14c8b56f71e3a0cc39d4e18720",
     short: "a2e90d1",
     author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },

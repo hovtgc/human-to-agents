@@ -28,5 +28,15 @@ Run the same command without `--dry-run` as a long-lived process. Reload the map
 |----------|---------|
 | `SLACK_BOT_TOKEN` | Slack adapter |
 | `DISCORD_BOT_TOKEN` | Discord adapter |
+| `NOTION_TOKEN` | Notion work ledger |
+
+Live Notion:
+
+```bash
+export NOTION_TOKEN=ntn_...
+python agent/python/relay.py --mapping examples/mapping.md --notion-db <projects-db-id> --dry-run
+```
+
+See [docs/notion.md](/blob/docs/notion.md).
 
 Tokens never live in the mapping file.

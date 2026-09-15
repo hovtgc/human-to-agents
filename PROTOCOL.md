@@ -4,15 +4,15 @@ Frozen at v0.3. v0.2 maps load unchanged. Implementations may add platforms. The
 
 ## Changelog
 
-- **v0.3** — optional `work` table. Each row is one broadcast, joined to a mapped room. Notion (or any PM) may *materialize* this table; the relay still only reads markdown. An existing `anchor` is a gather, not a skip: read that thread, cite permalinks, do not open a second.
+- **v0.3** — optional `work` table, live Notion ledger. The agent reads Projects and writes anchors, permalinks, and trail status back. Markdown `channels` remain the wall. An existing `anchor` is a gather, not a skip.
 - **v0.2** — path or `https://` mapping, SIGHUP reload, unknown ids redacted.
 
 ## 1. Mapping
 
 A mapping is a markdown document: YAML front matter + **one or two tables**. It is the only config.
 
-Source: a filesystem path **or** an `https://` URL. The agent does not fetch anything else.
-A provider (Notion, a database) may write the file. It never becomes the parse target.
+Source: a filesystem path **or** an `https://` URL for the channel map.
+Work rows come from the markdown `work` table **or** live from Notion (`--notion-db` + `NOTION_TOKEN`). The agent updates Notion after it posts or gathers. It does not parse Notion as the wall — channel ids still have to be rows in markdown.
 
 Required front matter: `workspace`, `platform` (`slack` | `discord`), `scope`, `agent`.
 Optional: `collect_seconds` (default `45`).

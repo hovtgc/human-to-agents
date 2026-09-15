@@ -29,6 +29,7 @@ A second anchor is a bug, not a retry.
    - Name lookup failed or rate-limited → `<unresolved:{id}>`. Never guess from context, nickname, or "the team".
    - No new replies → `trail: silent`. Silence is data. Do not fill it.
 5. File the trail to `reports`. Do not fan crumbs back into rooms.
+6. Write the same trail to Notion `Last Status Update` on that project page. After a post, write `Broadcast TS` and `Broadcast Permalink`. Dry-run prints the writes; it does not PATCH.
 
 ## Live shape
 
