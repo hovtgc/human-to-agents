@@ -79,7 +79,7 @@ if (values["dry-run"]) {
     }),
   );
   if (values["notion-db"]) {
-    const lines = await applyWrites(clientFromEnv(), plan(runtime.mapping), {}, true);
+    const lines = await applyWrites(clientFromEnv(), plan(runtime.mapping), {}, {}, true);
     for (const line of lines) console.log(line);
   }
   process.exit(0);

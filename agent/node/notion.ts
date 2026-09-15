@@ -82,6 +82,7 @@ export class NotionClient {
   }
 
   writeAnchor(pageId: string, ts: string, permalink: string) {
+    if (!ts) throw new NotionError("refusing empty Broadcast TS");
     return this.call("PATCH", `/pages/${pageId}`, {
       properties: {
         [PROPS.anchor]: richText(ts),
@@ -141,6 +142,7 @@ export async function loadWorkFromNotion(mapping: Mapping, databaseId: string, c
 export async function applyWrites(
   client: NotionClient,
   plan: { work: Work; action: string }[],
+  posts: Record<string, { ts: string; permalink: string }>,
   trails: Record<string, string>,
   dryRun: boolean,
 ): Promise<string[]> {
@@ -151,8 +153,13 @@ export async function applyWrites(
       continue;
     }
     if (action === "post") {
+      const posted = posts[w.id];
+      if (!posted?.ts) {
+        lines.push(`notion  ${w.id.padEnd(16)}  POST    no ts — leave empty, retry next run`);
+        continue;
+      }
       lines.push(`notion  ${w.id.padEnd(16)}  POST    write Broadcast TS + Permalink`);
-      if (!dryRun) await client.writeAnchor(w.pageId, w.anchor, trails[w.id] ?? "");
+      if (!dryRun) await client.writeAnchor(w.pageId, posted.ts, posted.permalink);
     } else if (action === "gather") {
       lines.push(`notion  ${w.id.padEnd(16)}  GATHER  write Last Status Update`);
       if (!dryRun) await client.writeTrail(w.pageId, trails[w.id] ?? "silent");

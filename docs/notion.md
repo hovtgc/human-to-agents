@@ -21,7 +21,7 @@ The Projects database. One row per unit of work.
 
 | After | Notion properties |
 |-------|-------------------|
-| **post** | `Broadcast TS`, `Broadcast Permalink` |
+| **post** | `Broadcast TS` (the ts Slack returned), `Broadcast Permalink`. No ts → no PATCH. |
 | **gather** | `Last Status Update` (the breadcrumb trail, clipped at 2000 chars with `(truncated)`) |
 | **gap** / **skip** | nothing |
 

@@ -99,6 +99,8 @@ class NotionClient:
         return tuple(rows)
 
     def write_anchor(self, page_id: str, ts: str, permalink: str) -> None:
+        if not ts:
+            raise NotionError("refusing empty Broadcast TS")
         self._call(
             "PATCH",
             "/pages/" + page_id,
@@ -175,20 +177,30 @@ def load_work_from_notion(mapping: Mapping, database_id: str, client: NotionClie
 def apply_writes(
     client: NotionClient,
     plan: tuple[tuple[Work, str], ...],
+    posts: dict[str, tuple[str, str]],
     trails: dict[str, str],
     *,
     dry_run: bool,
 ) -> list[str]:
-    """Write anchors and trails back to Notion. Dry-run returns the plan, no PATCH."""
+    """Write anchors and trails back to Notion. Dry-run returns the plan, no PATCH.
+
+    posts maps work id -> (thread_ts, permalink) from the adapter.
+    trails maps work id -> breadcrumb text for gather.
+    A post with no ts does not PATCH. Empty is not recoverable; missing is.
+    """
     lines: list[str] = []
     for w, action in plan:
         if not w.page_id:
             lines.append(f"notion  {w.id:16}  skip  no page id")
             continue
         if action == "post":
+            ts, permalink = posts.get(w.id, ("", ""))
+            if not ts:
+                lines.append(f"notion  {w.id:16}  POST    no ts — leave empty, retry next run")
+                continue
             lines.append(f"notion  {w.id:16}  POST    write Broadcast TS + Permalink")
             if not dry_run:
-                client.write_anchor(w.page_id, w.anchor, trails.get(w.id, ""))
+                client.write_anchor(w.page_id, ts, permalink)
         elif action == "gather":
             lines.append(f"notion  {w.id:16}  GATHER  write Last Status Update")
             if not dry_run:

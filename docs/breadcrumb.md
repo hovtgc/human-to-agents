@@ -6,7 +6,7 @@ A broadcast is a trail, not a blast. Info gathering follows one thread, in one r
 
 | `work.anchor` | action |
 |---------------|--------|
-| empty | **post** the ask once, record the thread id back onto the row |
+| empty | **post** the ask once, persist the thread ts Slack actually returned |
 | set | **gather** — read that thread. Do not open a second |
 | row has no mapped `room` | **gap** — report it, do not guess a channel |
 | `state: closed` | **skip** |
@@ -29,7 +29,7 @@ A second anchor is a bug, not a retry.
    - Name lookup failed or rate-limited → `<unresolved:{id}>`. Never guess from context, nickname, or "the team".
    - No new replies → `trail: silent`. Silence is data. Do not fill it.
 5. File the trail to `reports`. Do not fan crumbs back into rooms.
-6. Write the same trail to Notion `Last Status Update` on that project page. After a post, write `Broadcast TS` and `Broadcast Permalink`. Dry-run prints the writes; it does not PATCH.
+6. Write the same trail to Notion `Last Status Update` on that project page. After a post, write `Broadcast TS` (the returned thread ts) and `Broadcast Permalink`. If the post yields no ts, do not PATCH — leave the anchor empty so the next run retries. Never write an empty ts.
 
 ## Live shape
 

@@ -79,7 +79,7 @@ def main(argv: list[str] | None = None) -> int:
             collect_seconds=collect,
         ))
         if args.notion_db:
-            for line in apply_writes(client_from_env(), runtime.mapping.plan(), {}, dry_run=True):
+            for line in apply_writes(client_from_env(), runtime.mapping.plan(), {}, {}, dry_run=True):
                 sys.stdout.write(line + "\n")
         return 0
 

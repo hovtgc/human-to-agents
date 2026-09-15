@@ -3,6 +3,29 @@ import { FILES } from "./files";
 
 export const COMMITS: Commit[] = [
   {
+    hash: "d3f70b18a4c26e91f0d5aa47c8e13954",
+    short: "d3f70b1",
+    author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
+    date: "2026-09-15T18:30:00Z",
+    message: "Persist the real thread ts on post",
+    body: "A post row has an empty anchor by construction. Writing that empty value back is how a second thread appears. Persist the ts the adapter returned. If there is no ts, do not PATCH.",
+    files: [
+      {
+        path: "agent/python/notion.py",
+        status: "modified",
+        additions: 18,
+        deletions: 6,
+        patch: [
+          "@@ agent/python/notion.py",
+          "-client.write_anchor(w.page_id, w.anchor, trails.get(w.id, \"\"))",
+          "+ts, permalink = posts.get(w.id, (\"\", \"\"))",
+          "+if not ts: continue  # leave empty, retry next run",
+          "+client.write_anchor(w.page_id, ts, permalink)",
+        ].join("\n"),
+      },
+    ],
+  },
+  {
     hash: "b8d21e47c0a95f16e2b3cc58a9d07433",
     short: "b8d21e4",
     author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
