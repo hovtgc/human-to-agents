@@ -89,7 +89,7 @@ Optional second table — **work** — maps each broadcast to a project and a ro
 ```md
 | id | name | room | state | anchor | owner |
 |----|------|------|-------|--------|-------|
-| north-star | EU Consumer | C0OPS03 | active | | U08AAAA |
+| north-star | North Star launch | C0OPS03 | active | | U08AAAA |
 ```
 
 Notion (or any PM) dumps this table. The relay reads markdown. See [examples/mapping-work.md](/blob/examples/mapping-work.md).

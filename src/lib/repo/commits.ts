@@ -3,6 +3,53 @@ import { FILES } from "./files";
 
 export const COMMITS: Commit[] = [
   {
+    hash: "a2e90d14c8b56f71e3a0cc39d4e18720",
+    short: "a2e90d1",
+    author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
+    date: "2026-09-15T17:44:00Z",
+    message: "Redact real names from examples",
+    body: "Examples are fiction. No people, no brands, no production snowflakes.",
+    files: [
+      {
+        path: "examples/trail.md",
+        status: "modified",
+        additions: 4,
+        deletions: 4,
+        patch: [
+          "@@ examples/trail.md",
+          "-  - <redacted real name>",
+          "+  - Jordan Lee: legal copy is in the shared doc",
+          "-  - <unresolved:<redacted>>: thank you",
+          "+  - <unresolved:U0NONE01>: thank you",
+        ].join("\n"),
+      },
+      {
+        path: "examples/mapping-work.md",
+        status: "modified",
+        additions: 3,
+        deletions: 3,
+        patch: [
+          "@@ examples/mapping-work.md",
+          "-| north-star | North Star launch | C0OPS03 | active |",
+          "+| north-star | North Star launch | C0OPS03 | active |",
+          "-| beta-waitlist | Beta waitlist | C0LAUNCH | active |",
+          "+| beta-waitlist | Beta waitlist | C0LAUNCH | active |",
+        ].join("\n"),
+      },
+      {
+        path: "CONTRIBUTING.md",
+        status: "modified",
+        additions: 1,
+        deletions: 1,
+        patch: [
+          "@@ CONTRIBUTING.md",
+          "-3. Put a row in `examples/` only if it is fictional.",
+          "+3. Put a row in `examples/` only if it is fictional. No real names, user ids, channel ids, or brand names.",
+        ].join("\n"),
+      },
+    ],
+  },
+  {
     hash: "f4b18c20e9a73d55c0e1aa82b7d04691",
     short: "f4b18c2",
     author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },

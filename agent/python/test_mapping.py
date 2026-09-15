@@ -30,9 +30,9 @@ agent: relay-prime
 
 | id | name | room | state | anchor | owner |
 |----|------|------|-------|--------|-------|
-| north-star | EU Consumer | C0OPS03 | active | | U08AAAA |
-| insiders | Beta waitlist | C0LAUNCH | active | 1000000000.000001 | U06BBBB |
-| no-room | Orphan project | C0GHOST | active | | U06CCCC |
+| north-star | North Star launch | C0OPS03 | active | | U08AAAA |
+| beta-waitlist | Beta waitlist | C0LAUNCH | active | 1000000000.000001 | U06BBBB |
+| no-room | Unmapped work | C0GHOST | active | | U06CCCC |
 """
 
 
@@ -64,7 +64,7 @@ def test_work_plan_post_gather_gap():
     m = load_mapping(WORK)
     actions = {w.id: a for w, a in m.plan()}
     assert actions["north-star"] == "post"
-    assert actions["insiders"] == "gather"
+    assert actions["beta-waitlist"] == "gather"
     assert actions["no-room"] == "gap"
 
 

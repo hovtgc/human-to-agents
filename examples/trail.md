@@ -8,8 +8,8 @@ owner: U08AAAA
 anchor: 1000000000.000002
 action: gather
 trail:
-  - Jordan Lee: legal copy is in the shared doc  [https://example.slack.com/archives/C0OPS03/p1789405300]
-  - <unresolved:U0NONE01>: thank you  [https://example.slack.com/archives/C0OPS03/p1789405412]
+  - Jordan Lee: legal copy is in the shared doc  [https://example.slack.com/archives/C0OPS03/p1000000000003]
+  - <unresolved:U0NONE01>: thank you  [https://example.slack.com/archives/C0OPS03/p1000000000004]
 
 ## beta-waitlist — active
 room: C0LAUNCH
