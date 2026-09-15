@@ -3,6 +3,72 @@ import { FILES } from "./files";
 
 export const COMMITS: Commit[] = [
   {
+    hash: "c91e4a70b2d18f35a6c0e947d1b80f22",
+    short: "c91e4a7",
+    author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
+    date: "2026-09-15T17:10:00Z",
+    message: "Map each broadcast to a work row",
+    body: "Optional work table. One project, one room. Notion may dump it; the relay still only reads markdown. Empty anchor posts. Set anchor skips. Unmapped room is a gap.",
+    files: [
+      {
+        path: "PROTOCOL.md",
+        status: "modified",
+        additions: 28,
+        deletions: 6,
+        patch: [
+          "@@ PROTOCOL.md",
+          "-Frozen at v0.2.",
+          "+Frozen at v0.3. v0.2 maps load unchanged.",
+          "+### Work (optional)",
+          "+A second table, detected by columns `room` + `state`. Each row is a broadcast.",
+        ].join("\n"),
+      },
+      {
+        path: "agent/python/mapping.py",
+        status: "modified",
+        additions: 40,
+        deletions: 8,
+        patch: [
+          "@@ agent/python/mapping.py",
+          "+class Work:",
+          "+    id: str",
+          "+    room: str",
+          "+    state: str",
+          "+    anchor: str",
+          "+def plan(self):",
+          "+    if not w.room or w.room not in rooms: gap",
+          "+    elif w.anchor: skip",
+          "+    else: post",
+        ].join("\n"),
+      },
+      {
+        path: "examples/mapping-work.md",
+        status: "added",
+        additions: 22,
+        deletions: 0,
+        patch: [
+          "@@ examples/mapping-work.md",
+          "+| id | name | room | state | anchor | owner |",
+          "+| north-star | North Star launch | C0OPS03 | active | | U08AAAA |",
+          "+| beta-waitlist | Beta waitlist | C0LAUNCH | active | 1000000000.000001 | U06BBBB |",
+          "+| no-room | Unmapped work | C0GHOST | active | | U06CCCC |",
+        ].join("\n"),
+      },
+      {
+        path: "agent/python/notion.py",
+        status: "added",
+        additions: 12,
+        deletions: 0,
+        patch: [
+          "@@ agent/python/notion.py",
+          "+# Notion holds the projects. It is not the wall.",
+          "+def materialize() -> str:",
+          "+    raise RuntimeError(\"dump Projects to markdown, then --mapping that file\")",
+        ].join("\n"),
+      },
+    ],
+  },
+  {
     hash: "e7c1a04b92d85f13c6e0aa47b1d29f80",
     short: "e7c1a04",
     author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },

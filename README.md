@@ -25,7 +25,7 @@ scoped-relay/
     python/          # stdlib relay + Slack/Discord adapters
     node/            # TypeScript port, same contract
   schema/            # mapping markdown spec + JSON Schema
-  examples/          # slack + discord mappings
+  examples/          # slack + discord mappings, plus work/broadcasts
   docs/
 ```
 
@@ -63,7 +63,7 @@ The same mapping file runs in the cloud. Point a long-lived process (systemd, Fl
 
 ## Mapping
 
-A mapping is YAML front matter plus one table. The agent reads it on boot and on every `SIGHUP`.
+A mapping is YAML front matter plus one or two tables. The agent reads it on boot and on every `SIGHUP`.
 
 ```md
 ---
@@ -83,6 +83,16 @@ agent: relay-prime
 - `management` / `in` — broadcasts originate here.
 - `room` — scoped destinations. The agent may speak here only because the row exists.
 - `reports` / `out` — collected replies are posted here.
+
+Optional second table — **work** — maps each broadcast to a project and a room:
+
+```md
+| id | name | room | state | anchor | owner |
+|----|------|------|-------|--------|-------|
+| north-star | EU Consumer | C0OPS03 | active | | U08AAAA |
+```
+
+Notion (or any PM) dumps this table. The relay reads markdown. See [examples/mapping-work.md](/blob/examples/mapping-work.md).
 
 Full contract: [schema/channels.md](/blob/schema/channels.md).
 

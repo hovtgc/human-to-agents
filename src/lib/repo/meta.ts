@@ -15,7 +15,7 @@ export const REPO = {
   xUrl: "https://x.com/hovinthenorth",
   ownerName: "Hovhannes Mkhitaryan",
   ownerAvatar: "/owner.jpg",
-  version: "0.2.0",
+  version: "0.3.0",
   created: "2026-09-03",
 } as const;
 

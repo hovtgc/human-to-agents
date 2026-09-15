@@ -25,6 +25,22 @@
           "direction": { "enum": ["in", "out", "both"] }
         }
       }
+    },
+    "work": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "room", "state"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "name": { "type": "string" },
+          "room": { "type": "string" },
+          "state": { "enum": ["active", "blocked", "closed"] },
+          "anchor": { "type": "string" },
+          "owner": { "type": "string" }
+        }
+      }
     }
   }
 }

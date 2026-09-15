@@ -49,8 +49,36 @@ const LOCAL = [
   "collect_seconds: 45",
 ].join("\n");
 
+const WORK = [
+  "---",
+  "workspace: growth-chef",
+  "platform: slack",
+  "scope: team.growth",
+  "agent: relay-prime",
+  "collect_seconds: 45",
+  "---",
+  "",
+  "# growth-chef / team.growth — broadcasts as projects",
+  "",
+  "Fictional IDs. The `work` table is what Notion dumps. The `channels` table is the wall.",
+  "",
+  "| id | name | role | direction |",
+  "|----|------|------|-----------|",
+  "| C0MGMT01 | #mgmt | management | in |",
+  "| C0REPT02 | #reports | reports | out |",
+  "| C0OPS03 | #ops | room | both |",
+  "| C0LAUNCH | #launch | room | both |",
+  "",
+  "| id | name | room | state | anchor | owner |",
+  "|----|------|------|-------|--------|-------|",
+  "| north-star | North Star launch | C0OPS03 | active | | U08AAAA |",
+  "| beta-waitlist | Beta waitlist | C0LAUNCH | active | 1000000000.000001 | U06BBBB |",
+  "| no-room | Unmapped work | C0GHOST | active | | U06CCCC |",
+].join("\n");
+
 export const EXAMPLE_FILES: RepoFile[] = [
   { path: "examples/mapping.md", language: "markdown", content: MAPPING + "\n" },
   { path: "examples/discord.md", language: "markdown", content: DISCORD + "\n" },
+  { path: "examples/mapping-work.md", language: "markdown", content: WORK + "\n" },
   { path: "examples/local.yaml", language: "yaml", content: LOCAL + "\n" },
 ];

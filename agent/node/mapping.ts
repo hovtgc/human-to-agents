@@ -11,6 +11,15 @@ export type Channel = {
   direction: Direction;
 };
 
+export type Work = {
+  id: string;
+  name: string;
+  room: string;
+  state: string;
+  anchor: string;
+  owner: string;
+};
+
 export type Mapping = {
   workspace: string;
   platform: Platform;
@@ -18,13 +27,14 @@ export type Mapping = {
   agent: string;
   collectSeconds: number;
   channels: Channel[];
+  work: Work[];
 };
 
 export class MappingError extends Error {}
 
 export async function readSource(source: string): Promise<string> {
   if (source.startsWith("http://") || source.startsWith("https://")) {
-    const res = await fetch(source, { headers: { "User-Agent": "axiom-relay/0.2" } });
+    const res = await fetch(source, { headers: { "User-Agent": "axiom-relay/0.3" } });
     if (!res.ok) throw new MappingError(`mapping fetch ${res.status}`);
     return await res.text();
   }
@@ -37,8 +47,8 @@ export async function loadMappingFrom(source: string): Promise<Mapping> {
 
 export function loadMapping(text: string): Mapping {
   const { meta, body } = splitFrontMatter(text);
-  const channels = parseTable(body);
-  validate(meta, channels);
+  const { channels, work } = parseTables(body);
+  validate(meta, channels, work);
   return {
     workspace: meta.workspace,
     platform: meta.platform as Platform,
@@ -46,6 +56,7 @@ export function loadMapping(text: string): Mapping {
     agent: meta.agent,
     collectSeconds: Number(meta.collect_seconds ?? 45),
     channels,
+    work,
   };
 }
 
@@ -64,33 +75,72 @@ function splitFrontMatter(text: string): { meta: Record<string, string>; body: s
   return { meta, body };
 }
 
-function parseTable(body: string): Channel[] {
+function parseTables(body: string): { channels: Channel[]; work: Work[] } {
+  const channels: Channel[] = [];
+  const work: Work[] = [];
   let header: string[] | null = null;
-  const rows: Channel[] = [];
+  let rows: Record<string, string>[] = [];
+
+  const flush = () => {
+    if (!header) return;
+    const cols = new Set(header);
+    if (cols.has("role") && cols.has("direction")) {
+      for (const data of rows) {
+        channels.push({
+          id: data.id ?? "",
+          name: data.name ?? "",
+          role: (data.role ?? "") as Role,
+          direction: (data.direction ?? "") as Direction,
+        });
+      }
+    } else if (cols.has("room") && cols.has("state")) {
+      for (const data of rows) {
+        work.push({
+          id: data.id ?? "",
+          name: data.name ?? "",
+          room: data.room ?? "",
+          state: data.state ?? "",
+          anchor: data.anchor ?? "",
+          owner: data.owner ?? "",
+        });
+      }
+    }
+    header = null;
+    rows = [];
+  };
+
   for (const raw of body.split("\n")) {
     const line = raw.trim();
-    if (!line.startsWith("|")) continue;
+    if (!line.startsWith("|")) {
+      flush();
+      continue;
+    }
     const cells = line.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+    if (/^[-:\s|]+$/.test(line)) continue;
     if (!header) {
       header = cells.map((c) => c.toLowerCase());
       continue;
     }
-    if (/^[-:\s|]+$/.test(line)) continue;
     const data: Record<string, string> = {};
     header.forEach((key, i) => {
       data[key] = cells[i] ?? "";
     });
-    rows.push({
-      id: data.id,
-      name: data.name ?? "",
-      role: data.role as Role,
-      direction: data.direction as Direction,
-    });
+    rows.push(data);
   }
-  return rows;
+  flush();
+  return { channels, work };
 }
 
-function validate(meta: Record<string, string>, channels: Channel[]) {
+export function plan(mapping: Mapping): { work: Work; action: "post" | "skip" | "gap" }[] {
+  const rooms = new Set(mapping.channels.filter((c) => c.role === "room").map((c) => c.id));
+  return mapping.work.map((w) => {
+    if (!w.room || !rooms.has(w.room)) return { work: w, action: "gap" as const };
+    if (w.anchor || w.state === "closed") return { work: w, action: "skip" as const };
+    return { work: w, action: "post" as const };
+  });
+}
+
+function validate(meta: Record<string, string>, channels: Channel[], work: Work[]) {
   for (const key of ["workspace", "platform", "scope", "agent"]) {
     if (!meta[key]) throw new MappingError(`missing ${key}`);
   }
@@ -103,4 +153,6 @@ function validate(meta: Record<string, string>, channels: Channel[]) {
   const hasReport = channels.some((c) => c.role === "reports" && c.direction !== "in");
   if (!hasMgmt) throw new MappingError("need a management channel with direction in/both");
   if (!hasReport) throw new MappingError("need a reports channel with direction out/both");
+  const workIds = work.map((w) => w.id);
+  if (new Set(workIds).size !== workIds.length) throw new MappingError("duplicate work id");
 }

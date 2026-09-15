@@ -1,7 +1,7 @@
 # Channel mapping schema
 
 A mapping is a markdown document. Agents must parse it, not invent a parallel config.
-Contract: [PROTOCOL.md](/blob/PROTOCOL.md) (frozen v0.2).
+Contract: [PROTOCOL.md](/blob/PROTOCOL.md) (frozen v0.3; v0.2 maps load unchanged).
 
 ## Front matter
 
@@ -32,5 +32,8 @@ The mapping source itself is a path or an `https://` URL, passed as `--mapping`.
 4. Names are not unique and not keys.
 5. Unknown columns are ignored.
 6. Unknown ids never appear in logs, exceptions, or reports. Substitute `<outside-scope>`.
+7. Optional `work` table (`room` + `state` columns). Duplicate `work.id` is an error.
+8. `work.room` not in `channels` as a `room` → gap, not a parse error. Do not guess a channel.
+9. `work.anchor` set → skip. Do not open a second thread.
 
 Machine-readable copy: [mapping.schema.json](/blob/schema/mapping.schema.json).
