@@ -30,9 +30,9 @@ export const COMMITS: Commit[] = [
         deletions: 3,
         patch: [
           "@@ examples/mapping-work.md",
-          "-| north-star | North Star launch | C0OPS03 | active |",
+          "-| <redacted> | <redacted> | C0OPS03 | active |",
           "+| north-star | North Star launch | C0OPS03 | active |",
-          "-| beta-waitlist | Beta waitlist | C0LAUNCH | active |",
+          "-| <redacted> | <redacted> | C0LAUNCH | active |",
           "+| beta-waitlist | Beta waitlist | C0LAUNCH | active |",
         ].join("\n"),
       },
