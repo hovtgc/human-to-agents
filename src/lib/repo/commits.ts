@@ -3,6 +3,28 @@ import { FILES } from "./files";
 
 export const COMMITS: Commit[] = [
   {
+    hash: "a9c3d71e4b08f562d1e7aa90c5b38643",
+    short: "a9c3d71",
+    author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
+    date: "2026-10-18T05:21:00Z",
+    message: "The relay is the agent in the workspace",
+    body: "Production is not a bot and not a 45s timer. The agent already has Slack or Discord. One pass: post or gather, store the thread, stop.",
+    files: [
+      {
+        path: "SKILL.md",
+        status: "modified",
+        additions: 28,
+        deletions: 40,
+        patch: [
+          "@@ SKILL.md",
+          "-What runs the relay? Python or Node.",
+          "+You are the runtime. Do not ask Python or Node.",
+          "+One pass, then stop. Replies are for the next pass.",
+        ].join("\n"),
+      },
+    ],
+  },
+  {
     hash: "f2b80e55c1a74d09e8c3bb21a6f09472",
     short: "f2b80e5",
     author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
