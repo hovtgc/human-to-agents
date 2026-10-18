@@ -131,10 +131,17 @@ python agent/python/relay.py --mapping path/to/map.md --dry-run
 6. Dry-run never writes Notion and never posts.
 7. Do not wait out a collect window. One pass, then stop. Replies are for the next pass.
 8. Protocol states are only `active`, `blocked`, and `closed`. A company's own status word is a gap. Do not treat it as active, and do not rename it unless they say which of the three it is.
+9. The card is a tag in the room. It is not saved. Owner is the field that stays on the row. Do not write "on it" or the quote back, and do not change owner from the card.
 
 The contract is [PROTOCOL.md](PROTOCOL.md). This file is how you behave. Do not widen it.
 
 ## The room message
+
+The card is FYI. People read it in the thread. Nothing on it is a new field.
+
+Owner already lives on the work row. Copy it onto the card if you have it. Do not save the card, and do not change owner because someone else is on it or because they replied.
+
+"Is on it" and the quote are tags for that one message. Leave them off when you don't have them. Do not invent a column for either.
 
 Call `render` in `agent/python/broadcast.py` or `agent/node/broadcast.ts`. Do not write the message yourself.
 

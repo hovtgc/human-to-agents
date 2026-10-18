@@ -17,9 +17,9 @@ A kind that does not match its state is an error. So is a missing title.
 |-------|---------|
 | title | one bold line |
 | work id + state | `` `id`  ·  active `` |
-| owner | `{name} owns it` — omit if empty |
-| assignee | `{name} is on it` — omit if empty |
-| quote | one blockquote, optional attribution |
+| owner | `{name} owns it` — copied from the saved row. Omit if empty. The card does not change it. |
+| assignee | `{name} is on it` — a tag on this message only. Not saved. |
+| quote | one blockquote. A tag on this message only. Not saved. |
 
 Pass a resolved name or a real mention. Do not guess one. An unresolved id stays an id.
 

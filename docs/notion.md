@@ -25,6 +25,8 @@ The Projects database. One row per unit of work.
 | **gather** | `Last Status Update` (the breadcrumb trail, clipped at 2000 chars with `(truncated)`) |
 | **gap** / **skip** | nothing |
 
+Do not write `Owner`. The card does not change who owns the work.
+
 Dry-run GETs the database and prints the write plan. It does not PATCH.
 
 ## Run

@@ -3,6 +3,27 @@ import { FILES } from "./files";
 
 export const COMMITS: Commit[] = [
   {
+    hash: "c5d29f81e0a47b63f2c4dd59a0e18665",
+    short: "c5d29f8",
+    author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
+    date: "2026-10-18T05:30:00Z",
+    message: "The card is a tag. Owner stays saved.",
+    body: "The room message is FYI. It is not a record. Owner stays on the work row. On-it and the quote are not written back.",
+    files: [
+      {
+        path: "SKILL.md",
+        status: "modified",
+        additions: 6,
+        deletions: 0,
+        patch: [
+          "@@ SKILL.md",
+          "+The card is a tag in the room. It is not saved.",
+          "+Owner is the field that stays on the row.",
+        ].join("\n"),
+      },
+    ],
+  },
+  {
     hash: "b4e18a02d7c65f90a1b3cc48e9d07554",
     short: "b4e18a0",
     author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
