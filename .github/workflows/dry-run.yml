@@ -12,6 +12,7 @@ jobs:
       - run: python agent/python/test_mapping.py
       - run: python agent/python/test_report.py
       - run: python agent/python/test_notion.py
+      - run: python agent/python/test_broadcast.py
       - run: python agent/python/relay.py --mapping examples/mapping.md --dry-run
       - run: python agent/python/relay.py --mapping examples/mapping-work.md --dry-run
   node:

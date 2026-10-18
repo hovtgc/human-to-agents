@@ -8,6 +8,7 @@ import { ScopeGuard } from "./scope.ts";
 import { SlackAdapter } from "./slack.ts";
 import { DiscordAdapter } from "./discord.ts";
 import { applyWrites, clientFromEnv, loadWorkFromNotion, NotionError } from "./notion.ts";
+import { previewPosts } from "./broadcast.ts";
 
 const adapters = { slack: SlackAdapter, discord: DiscordAdapter } as const;
 
@@ -82,6 +83,8 @@ if (values["dry-run"]) {
     const lines = await applyWrites(clientFromEnv(), plan(runtime.mapping), {}, {}, true);
     for (const line of lines) console.log(line);
   }
+  const preview = previewPosts(runtime.mapping, runtime.platform);
+  if (preview) process.stdout.write("\n" + preview);
   process.exit(0);
 }
 

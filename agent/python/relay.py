@@ -24,6 +24,7 @@ from discord_adapter import DiscordAdapter
 from mapping import load_mapping_from
 from notion import NotionError, apply_writes, client_from_env, load_work_from_notion
 from report import format_report
+from broadcast import preview_posts
 from scope import ScopeGuard
 from slack_adapter import SlackAdapter
 
@@ -81,6 +82,9 @@ def main(argv: list[str] | None = None) -> int:
         if args.notion_db:
             for line in apply_writes(client_from_env(), runtime.mapping.plan(), {}, {}, dry_run=True):
                 sys.stdout.write(line + "\n")
+        preview = preview_posts(runtime.mapping, runtime.platform)
+        if preview:
+            sys.stdout.write("\n" + preview)
         return 0
 
     if hasattr(signal, "SIGHUP"):

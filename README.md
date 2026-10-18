@@ -14,13 +14,14 @@ relay that reads it, and a wall that the agent cannot climb.
 2. **Relay, then report.** Management channels broadcast. The agent fans the message into scoped rooms, collects replies, and reports back. Nothing else.
 3. **Scope is a wall.** An agent bound to `team.growth` cannot read, write, or even name a channel outside that scope.
 
-See [AXIOMS.md](/blob/AXIOMS.md) and [PROTOCOL.md](/blob/PROTOCOL.md).
+See [AXIOMS.md](/blob/AXIOMS.md) and [PROTOCOL.md](/blob/PROTOCOL.md). Agents start at [SKILL.md](/blob/SKILL.md).
 
 ## Tree
 
 ```
 scoped-relay/
   PROTOCOL.md        # frozen contract
+  SKILL.md           # load this if you are an agent
   agent/
     python/          # stdlib relay + Slack/Discord adapters
     node/            # TypeScript port, same contract

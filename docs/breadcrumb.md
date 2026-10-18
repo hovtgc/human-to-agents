@@ -30,6 +30,7 @@ A second anchor is a bug, not a retry.
    - No new replies → `trail: silent`. Silence is data. Do not fill it.
 5. File the trail to `reports`. Do not fan crumbs back into rooms.
 6. Write the same trail to Notion `Last Status Update` on that project page. After a post, write `Broadcast TS` (the returned thread ts) and `Broadcast Permalink`. If the post yields no ts, do not PATCH — leave the anchor empty so the next run retries. Never write an empty ts.
+7. The room message is a template (`kickoff`, `nudge`, `blocked`, `done`). See [docs/broadcasts.md](/blob/docs/broadcasts.md).
 
 ## Live shape
 

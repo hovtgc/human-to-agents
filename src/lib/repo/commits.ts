@@ -3,6 +3,38 @@ import { FILES } from "./files";
 
 export const COMMITS: Commit[] = [
   {
+    hash: "e7a14c90b2d58f33c6e1aa80d4b27561",
+    short: "e7a14c9",
+    author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
+    date: "2026-10-18T05:20:00Z",
+    message: "Ship broadcast cards and an agent skill",
+    body: "Room posts were a labeled dump. Four templates now: kickoff, nudge, blocked, done. Empty fields drop out. SKILL.md is what an agent loads.",
+    files: [
+      {
+        path: "SKILL.md",
+        status: "added",
+        additions: 70,
+        deletions: 0,
+        patch: [
+          "@@ SKILL.md",
+          "+name: scoped-relay",
+          "+Call render. Do not write the message yourself.",
+        ].join("\n"),
+      },
+      {
+        path: "agent/python/broadcast.py",
+        status: "added",
+        additions: 90,
+        deletions: 0,
+        patch: [
+          "@@ agent/python/broadcast.py",
+          "+def render(b: Broadcast) -> str:",
+          "+# no broadcast: / state: / owner: lines",
+        ].join("\n"),
+      },
+    ],
+  },
+  {
     hash: "d3f70b18a4c26e91f0d5aa47c8e13954",
     short: "d3f70b1",
     author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
