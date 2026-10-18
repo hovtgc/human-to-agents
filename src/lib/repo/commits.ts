@@ -3,6 +3,28 @@ import { FILES } from "./files";
 
 export const COMMITS: Commit[] = [
   {
+    hash: "f2b80e55c1a74d09e8c3bb21a6f09472",
+    short: "f2b80e5",
+    author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
+    date: "2026-10-18T05:18:00Z",
+    message: "Open the skill with the stack walkthrough",
+    body: "First screen is what it is, how a message moves, where the data lives, and three questions: Slack or Discord, Python or Node, Notion or a markdown table.",
+    files: [
+      {
+        path: "SKILL.md",
+        status: "modified",
+        additions: 90,
+        deletions: 20,
+        patch: [
+          "@@ SKILL.md",
+          "+If you just loaded this, do not write a file yet.",
+          "+## Pick your stack",
+          "+Ask these three questions. Wait. Do not default.",
+        ].join("\n"),
+      },
+    ],
+  },
+  {
     hash: "e7a14c90b2d58f33c6e1aa80d4b27561",
     short: "e7a14c9",
     author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
