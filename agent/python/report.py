@@ -68,7 +68,10 @@ def _format_work_report(
         lines.append("")
         lines.append("## " + w.id + " — " + (w.state or "active"))
         if action == "gap":
-            lines.append("gaps: room not in map")
+            if not w.room or w.room not in mapping.room_ids():
+                lines.append("gaps: room not in map")
+            else:
+                lines.append(f"gaps: status {w.state!r} is not active, blocked, or closed")
             continue
         lines.append(f"room: {guard.redact(w.room)}")
         if w.owner:

@@ -57,6 +57,8 @@ class Mapping:
         for w in self.work:
             if not w.room or w.room not in rooms:
                 out.append((w, "gap"))
+            elif w.state and w.state not in {"active", "blocked", "closed"}:
+                out.append((w, "gap"))
             elif w.state == "closed":
                 out.append((w, "skip"))
             elif w.anchor:

@@ -58,7 +58,9 @@ function formatWorkReport(
     lines.push("");
     lines.push(`## ${w.id} — ${w.state || "active"}`);
     if (action === "gap") {
-      lines.push("gaps: room not in map");
+      const rooms = new Set(mapping.channels.filter((c) => c.role === "room").map((c) => c.id));
+      if (!w.room || !rooms.has(w.room)) lines.push("gaps: room not in map");
+      else lines.push(`gaps: status ${w.state} is not active, blocked, or closed`);
       continue;
     }
     lines.push(`room: ${guard.redact(w.room)}`);

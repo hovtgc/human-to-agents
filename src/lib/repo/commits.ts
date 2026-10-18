@@ -3,6 +3,27 @@ import { FILES } from "./files";
 
 export const COMMITS: Commit[] = [
   {
+    hash: "b4e18a02d7c65f90a1b3cc48e9d07554",
+    short: "b4e18a0",
+    author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },
+    date: "2026-10-18T05:27:00Z",
+    message: "Protocol states are only active, blocked, closed",
+    body: "A company's own status word is not the protocol. It is a gap, not a silent post. The company maps it onto one of the three if they want it to move.",
+    files: [
+      {
+        path: "agent/python/notion.py",
+        status: "modified",
+        additions: 4,
+        deletions: 10,
+        patch: [
+          "@@ agent/python/notion.py",
+          "-In Progress / Aligning / Parked are not protocol states.",
+          "+Unknown status stays unknown. The plan gaps it.",
+        ].join("\n"),
+      },
+    ],
+  },
+  {
     hash: "a9c3d71e4b08f562d1e7aa90c5b38643",
     short: "a9c3d71",
     author: { name: "Hovhannes Mkhitaryan", handle: "hovinthenorth" },

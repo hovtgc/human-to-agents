@@ -22,17 +22,6 @@ export const PROPS = {
   statusUpdate: "Last Status Update",
 } as const;
 
-const STATES: Record<string, string> = {
-  active: "active",
-  aligning: "active",
-  "in progress": "active",
-  "in-progress": "active",
-  blocked: "blocked",
-  closed: "closed",
-  done: "closed",
-  parked: "closed",
-};
-
 export type Transport = (method: string, url: string, headers: Record<string, string>, body?: string) => Promise<any>;
 
 export class NotionError extends Error {}
@@ -128,7 +117,7 @@ export function workFromPage(page: any): Work | null {
     id: key,
     name: name || key,
     room: plain(props[PROPS.room]),
-    state: STATES[raw] ?? "active",
+    state: raw,
     anchor: plain(props[PROPS.anchor]),
     owner: plain(props[PROPS.owner]),
     pageId: page.id ?? "",

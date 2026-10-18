@@ -130,6 +130,7 @@ python agent/python/relay.py --mapping path/to/map.md --dry-run
 5. Examples stay fiction. No real names, user ids, channel ids, or brands.
 6. Dry-run never writes Notion and never posts.
 7. Do not wait out a collect window. One pass, then stop. Replies are for the next pass.
+8. Protocol states are only `active`, `blocked`, and `closed`. A company's own status word is a gap. Do not treat it as active, and do not rename it unless they say which of the three it is.
 
 The contract is [PROTOCOL.md](PROTOCOL.md). This file is how you behave. Do not widen it.
 

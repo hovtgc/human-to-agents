@@ -33,17 +33,6 @@ PROPS = {
     "status_update": "Last Status Update",
 }
 
-STATES = {
-    "active": "active",
-    "aligning": "active",
-    "in progress": "active",
-    "in-progress": "active",
-    "blocked": "blocked",
-    "closed": "closed",
-    "done": "closed",
-    "parked": "closed",
-}
-
 Transport = Callable[[str, str, dict[str, str], bytes | None], dict[str, Any]]
 
 
@@ -150,7 +139,8 @@ def _plain(prop: dict[str, Any] | None) -> str:
 
 
 def normalize_state(raw: str) -> str:
-    return STATES.get(raw.strip().lower(), "active" if raw else "active")
+    """Protocol states only. A company word is returned unchanged so the plan can gap it."""
+    return raw.strip().lower()
 
 
 def work_from_page(page: dict[str, Any]) -> Work | None:

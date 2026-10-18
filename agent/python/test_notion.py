@@ -22,7 +22,7 @@ PAGE = {
         "Name": {"type": "title", "title": [{"plain_text": "North Star launch"}]},
         "Scope key": {"type": "rich_text", "rich_text": [{"plain_text": "north-star"}]},
         "Admin Channel": {"type": "rich_text", "rich_text": [{"plain_text": "C0OPS03"}]},
-        "Status": {"type": "status", "status": {"name": "In Progress"}},
+        "Status": {"type": "status", "status": {"name": "Active"}},
         "Broadcast TS": {"type": "rich_text", "rich_text": []},
         "Owner": {"type": "rich_text", "rich_text": [{"plain_text": "U08AAAA"}]},
     },
@@ -37,6 +37,23 @@ def test_work_from_page():
     assert w.state == "active"
     assert w.anchor == ""
     assert w.page_id == "page-north"
+
+
+def test_company_status_is_not_treated_as_active():
+    page = {
+        "id": PAGE["id"],
+        "properties": dict(PAGE["properties"]),
+    }
+    page["properties"]["Status"] = {"type": "status", "status": {"name": "Review"}}
+
+    def transport(method, url, headers, body):
+        return {"results": [page], "has_more": False}
+
+    client = NotionClient("secret_test", transport)
+    mapping = load_work_from_notion(load_mapping(SAMPLE), "db1", client)
+    work, action = mapping.plan()[0]
+    assert work.state == "review"
+    assert action == "gap"
 
 
 def test_query_overlays_mapping():
@@ -125,6 +142,7 @@ def test_clip_marks_truncation():
 
 if __name__ == "__main__":
     test_work_from_page()
+    test_company_status_is_not_treated_as_active()
     test_query_overlays_mapping()
     test_dry_run_does_not_patch()
     test_live_write_patches_anchor()

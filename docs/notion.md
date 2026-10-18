@@ -13,7 +13,7 @@ The Projects database. One row per unit of work.
 | Name | `name` |
 | Scope key | `id` (falls back to a slug of Name) |
 | Admin Channel | `room` — must already be a `room` row in the markdown map |
-| Status | `state` (`In Progress`/`Aligning` → active, `Blocked` → blocked, `Done`/`Parked` → closed) |
+| Status | `state` — only `active`, `blocked`, `closed`. Any other word the company uses is a gap, not a post. |
 | Broadcast TS | `anchor` |
 | Owner | `owner` |
 
